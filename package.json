@@ -1,6 +1,7 @@
 {
     "name": "Entrega5_BBDD",
     "author": "CORE-2020",
+    "description": "CORE_Entrega5_BBDD",
     "license": "GNU",
     "version": "0.0.0",
     "info": {
@@ -8,5 +9,15 @@
         "serverUrl": "https://autocorector.dit.upm.es/",
         "courseId": "8249",
         "assignmentId": "77288"
+    },
+    "scripts": {
+        "migrate": "sequelize db:migrate --url sqlite://$(pwd)/db.sqlite",
+        "seed": "sequelize db:seed:all --url sqlite://$(pwd)/db.sqlite",
+        "start": "node main.js"
+    },
+    "dependencies": {
+        "sequelize": "^5.21.3",
+        "sequelize-cli": "^5.5.0",
+        "sqlite3": "^4.0.9"
     }
 }
