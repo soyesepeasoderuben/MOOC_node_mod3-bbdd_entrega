@@ -5,9 +5,13 @@
 <br/><br/><br/>
 
 # Entrega5_BBDD
+
+Versión: 18 de Febrero de 2020
+
 ## Objetivos
  * Objetivo 1
  * Objetivo 2
+
 ## Descripción de la práctica
 
 A completar por el profesor
@@ -20,11 +24,25 @@ El proyecto debe clonarse en el ordenador desde el que se está trabajando:
 ```
 $ git clone https://github.com/CORE-2020/Entrega5_BBDD
 ```
-A continuación se debe acceder al directorio de trabajo y abrir el fichero index.html con el editor de la elección del alumno.
+A continuación se debe acceder al directorio de trabajo, instalar las dependencias y configurar la base de datos (migraciones y seeders). Entonces puede arrancarse el programa.
 
 ```
 $ cd Entrega5_BBDD
+$
+$ npm install
+$
+$ npm run migrate
+$
+$ npm run seed
+$
+$ npm start     ##  or 'node main'
+
 ```
+
+## Tareas
+
+...
+
 ## Prueba de la práctica 
 
 Para ayudar al desarrollo, se provee una herramienta de autocorrección que prueba las distintas funcionalidades que se piden en el enunciado. Para utilizar esta herramienta debes tener node.js (y npm) ([https://nodejs.org/es/](https://nodejs.org/es/)) y Git instalados. 
@@ -60,3 +78,8 @@ $ npx autocorector --upload
 
 La herramienta de autocorrección preguntará por el correo del alumno y el token de Moodle. En el enlace [https://www.npmjs.com/package/autocorector](https://www.npmjs.com/package/autocorector) se proveen instrucciones para encontrar dicho token.
 
+**RÚBRICA**: Se puntuará el ejercicio a corregir sumando el % indicado a la nota total si la parte indicada es correcta:
+
+-  **25%:** Se ...
+
+Si pasa todos los tests se dar? la m?xima puntuaci?n.
