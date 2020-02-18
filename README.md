@@ -14,7 +14,7 @@ Versión: 18 de Febrero de 2020
 
 ## Descripción de la práctica
 
-Esta práctica consiste en la ampliación del proyecto de gestión de usuarios y quizes desarrollado en clase. Se añadirá la posibilidad de jugar a responder las preguntas almacenadas en el servicio de manera aleatoria y consecutiva hasta fallar alguna de ellas. Se implementará también una nueva funcionalidad para almacenar las puntuaciones conseguidas por cada usuario (número de aciertos) y para poder consultarlas en cualquier momento. 
+Esta práctica consiste en la ampliación del proyecto de gestión de usuarios y quizzes desarrollado en clase. Se añadirá la posibilidad de jugar a responder las preguntas almacenadas en el servicio de manera aleatoria y consecutiva hasta fallar alguna de ellas. Se implementará también una nueva funcionalidad para almacenar las puntuaciones conseguidas por cada usuario (número de aciertos) y para poder consultarlas en cualquier momento. 
 
 
 ## Descargar el código del proyecto
@@ -36,7 +36,6 @@ $
 $ npm run seed
 $
 $ npm start     ##  or 'node main'
-
 ```
 
 ## Tareas
@@ -45,10 +44,10 @@ El alumno debe implementar las siguientes nuevas funcionalidades sobre el proyec
 
 ### Funcionalidad play
 
-Debe incluirse el nuevo comando ``p`` (play) que comienza una nueva ronda de preguntas. Al ejecutar este comando los quizes almacenados en el sistema van mostrándose de manera aleatoria y consecutiva al usuario que debe tratar de contestarlos.
+Debe incluirse el nuevo comando ``p`` (play) que comienza una nueva ronda de preguntas. Al ejecutar este comando los quizzes almacenados en el sistema van mostrándose de manera aleatoria y consecutiva al usuario que debe tratar de contestarlos.
 
-- Si se contesta correctamente a un quiz y hay más quizes disponibles se muestra el siguiente siguiendo un orden aleatorio.
-- Si se contesta correctamente a un quiz y no hay más quizes disponibles se muestra por pantalla la puntuación obtenida (número de aciertos) y se vuelve al menú principal.
+- Si se contesta correctamente a un quiz y hay más quizzes disponibles se muestra el siguiente siguiendo un orden aleatorio.
+- Si se contesta correctamente a un quiz y no hay más quizzes disponibles se muestra por pantalla la puntuación obtenida (número de aciertos) y se vuelve al menú principal.
 - Si se contesta incorrectamente a un quiz se muestra por pantalla la puntuación obtenida (número de aciertos) y se vuelve al menú principal.
 
 ### Funcionalidad puntuaciones
@@ -56,7 +55,7 @@ Debe incluirse el nuevo comando ``p`` (play) que comienza una nueva ronda de pre
 Las puntuaciones obtenidas por un usuario registrado deben almacenarse en la base de datos al terminar una ronda de preguntas. Además las puntuaciones de los usuarios deben poder consultarse en cualquier momento usando el nuevo comando ``ls`` (list score). Para ello deben realizarse los siguientes pasos: 
 
 1. Incluir un nuevo modelo ``Score`` así como su relación con la tabla de usuarios. Hay que tener en cuenta que para un mismo usuario se almacenarán varias puntuaciones, una por cada vez que juegue. La tabla ``Score`` almacenará los siguientes atributos:
-	- Atributo ``score`` de tipo entero que indica el número de quizes contestados correctamente.
+	- Atributo ``score`` de tipo entero que indica el número de quizzes contestados correctamente.
 	- Atributo ``date`` de tipo fecha que indica la fecha en la que se consiguió la puntuación.
 	- Referencia al identificador de usuario de la tabla User.
 
@@ -64,7 +63,7 @@ Las puntuaciones obtenidas por un usuario registrado deben almacenarse en la bas
 
 3. Ampliar la funcionalidad play para solicitar el nombre de usuario al finalizar el juego y para almacenar la puntuación asociada a dicho usuario en la base de datos. En caso de que el usuario introducido no exista se creará un nuevo usuario con el nombre introducido. 
 
-4. Implementar la funcionalidad del nuevo comando ``ls`` (list score) que pinta una lista de las  ordenadas de mayor a menor con el siguiente formato (para mostrar la fecha se debe utilizar el método ``toUTCString()`` del objeto Date): 
+4. Implementar la funcionalidad del nuevo comando ``ls`` (list score) que pinta una lista de las puntaciones ordenadas de mayor a menor con el siguiente formato (para dar formato a la fecha se debe utilizar el método ``toUTCString()`` del objeto ``Date``): 
 
 
 ```
@@ -72,7 +71,6 @@ Peter|3|Tue, 18 Feb 2020 14:20:27 GMT
 Susan|2|Tue, 18 Feb 2020 14:20:27 GMT
 Kike|2|Tue, 18 Feb 2020 14:20:27 GMT
 Patri|1|Tue, 18 Feb 2020 14:20:27 GMT
-
 ```
 
 
@@ -115,4 +113,4 @@ La herramienta de autocorrección preguntará por el correo del alumno y el toke
 
 -  **25%:** Se ...
 
-Si pasa todos los tests se dar? la m?xima puntuaci?n.
+Si pasa todos los tests se dará la máxima puntuación.
