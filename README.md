@@ -44,11 +44,11 @@ El alumno debe implementar las siguientes nuevas funcionalidades sobre el proyec
 
 ### Funcionalidad play
 
-Debe incluirse el nuevo comando ``p`` (play) que comienza una nueva ronda de preguntas. Al ejecutar este comando los quizzes almacenados en el sistema van mostrándose de manera aleatoria y consecutiva al usuario que debe tratar de contestarlos.
+Debe incluirse el nuevo comando ``p`` (play) que comienza una nueva ronda de preguntas. Al ejecutar este comando los quizzes almacenados en el sistema (en concreto el campo ``question`` de cada quiz) van mostrándose (usando la función ``rl.questionSync``) de manera aleatoria y consecutiva al usuario que debe tratar de contestarlos.
 
-- Si se contesta correctamente a un quiz y hay más quizzes disponibles se muestra el siguiente siguiendo un orden aleatorio.
-- Si se contesta correctamente a un quiz y no hay más quizzes disponibles se muestra por pantalla la puntuación obtenida (número de aciertos) y se vuelve al menú principal.
-- Si se contesta incorrectamente a un quiz se muestra por pantalla la puntuación obtenida (número de aciertos) y se vuelve al menú principal.
+- Si se contesta correctamente a un quiz y hay más quizzes disponibles se muestra el mensaje ``  The answer "xxxxxxx" is right!`` usando la función ``rl.log`` y después la pregunta siguiente siguiente (usando la función ``rl.questionSync``) siguiendo un orden aleatorio.
+- Si se contesta correctamente a un quiz y no hay más quizzes disponibles se muestra el mensaje ``  The answer "xxxxxxx" is right!`` usando la función ``rl.log`` y después la puntuación obtenida (número de aciertos) con el formato ``Score: X`` y usando la función ``rl.log``. Después se vuelve al menú principal.
+- Si se contesta incorrectamente a un quiz se muestra el mensaje ``  The answer "xxxxxxx" is wrong!`` usando la función ``rl.log`` y después se muestra por pantalla la puntuación obtenida (número de aciertos) con el formato ``Score: X`` y usando la función ``rl.log``. Después se vuelve al menú principal.
 
 ### Funcionalidad puntuaciones
 
