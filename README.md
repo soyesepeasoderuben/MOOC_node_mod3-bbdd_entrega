@@ -36,6 +36,29 @@ $
 $ npm run seed
 $
 $ npm start     ##  or 'node main'
+....
+> h
+  Commands (params are requested after):
+    > h              ## show help
+    >
+    > lu | ul | u    ## users: list all
+    > cu | uc        ## user: create
+    > ru | ur | r    ## user: read (show age)
+    > uu             ## user: update
+    > du | ud        ## user: delete
+    >
+    > lq | ql | q    ## quizzes: list all
+    > cq | qc        ## quiz: create
+    > tq | qt | t    ## quiz: test (play)
+    > uq | qu        ## quiz: update
+    > dq | qd        ## quiz: delete
+    >
+    > lf | fl | f    ## favourites: list all
+    > cf | fc        ## favourite: create
+    > df | fd        ## favourite: delete
+    >
+    > e              ## exit & return to shell
+    > 
 ```
 
 ## Tareas
