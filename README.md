@@ -19,7 +19,7 @@ Esta práctica consiste en la ampliación del proyecto de gestión de usuarios y
 
 ## Descargar el código del proyecto
 
-El proyecto debe clonarse en el ordenador desde el que se está trabajando:
+Es necesario utilizar la versión 12 de Node.js para el desarrollo de esta práctica. El proyecto debe clonarse en el ordenador desde el que se está trabajando: 
 
 ```
 $ git clone https://github.com/CORE-2020/Entrega5_BBDD
@@ -67,17 +67,17 @@ El alumno debe implementar las siguientes nuevas funcionalidades sobre el proyec
 
 ### Funcionalidad play
 
-Debe incluirse el nuevo comando ``p`` (play) que comienza una nueva ronda de preguntas. Al ejecutar este comando los quizzes almacenados en el sistema (en concreto el campo ``question`` de cada quiz) van mostrándose (usando la función ``rl.questionSync``) de manera aleatoria y consecutiva al usuario que debe tratar de contestarlos.
+Debe incluirse el nuevo comando ``p`` (play) que comienza una nueva ronda de preguntas. Al ejecutar este comando los quizzes almacenados en el sistema (en concreto el campo ``question`` de cada quiz) van mostrándose (usando la función ``rl.questionSync``) de manera aleatoria y consecutiva para tratar de contestarlos.
 
 - Si se contesta correctamente a un quiz y hay más quizzes disponibles se muestra el mensaje ``  The answer "xxxxxxx" is right!`` usando la función ``rl.log`` y después la pregunta siguiente (usando la función ``rl.questionSync``) siguiendo un orden aleatorio.
-- Si se contesta correctamente a un quiz y no hay más quizzes disponibles se muestra el mensaje ``  The answer "xxxxxxx" is right!`` usando la función ``rl.log`` y después la puntuación obtenida (número de aciertos) con el formato ``Score: X`` y usando la función ``rl.log``. Después se vuelve al menú principal.
-- Si se contesta incorrectamente a un quiz se muestra el mensaje ``  The answer "xxxxxxx" is wrong!`` usando la función ``rl.log`` y después se muestra por pantalla la puntuación obtenida (número de aciertos) con el formato ``Score: X`` y usando la función ``rl.log``. Después se vuelve al menú principal.
+- Si se contesta correctamente a un quiz y no hay más quizzes disponibles se muestra el mensaje ``  The answer "xxxxxxx" is right!`` usando la función ``rl.log`` y después la puntuación obtenida (número de aciertos) con el formato ``Score: X`` y usando la función ``rl.log``.
+- Si se contesta incorrectamente a un quiz se muestra el mensaje ``  The answer "xxxxxxx" is wrong!`` usando la función ``rl.log`` y después se muestra por pantalla la puntuación obtenida (número de aciertos) con el formato ``Score: X`` y usando la función ``rl.log``.
 
 ### Funcionalidad scores
 
 Las puntuaciones obtenidas por un usuario registrado deben almacenarse en la base de datos al terminar una ronda de preguntas. Además las puntuaciones de los usuarios deben poder consultarse en cualquier momento usando el nuevo comando ``ls`` (list score). Para ello deben realizarse los siguientes pasos: 
 
-1. Incluir un nuevo modelo ``Score`` así como su relación con la tabla de usuarios. Hay que tener en cuenta que para un mismo usuario se almacenarán varias puntuaciones, una por cada vez que juegue. La tabla ``Scores`` almacenará los siguientes atributos:
+1. Incluir un nuevo modelo ``Score`` así como su relación con la tabla de usuarios. Hay que tener en cuenta que para un mismo usuario se almacenarán varias puntuaciones, una por cada vez que juegue (debe utilizarse el alias ``scores`` para referenciar las puntuaciones asociadas a un usuario). La tabla ``Scores`` almacenará los siguientes atributos:
 	- Atributo ``wins`` de tipo entero que indica el número de quizzes contestados correctamente. No puede ser nulo y debe ser mayor que 0.
 	- Referencia ``userId`` al identificador de usuario de la tabla User.
 

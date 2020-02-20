@@ -111,7 +111,7 @@ describe("(Checks) Entrega5_BBDD", function () {
 
     const spawn = require("child_process").spawn;
     const timeout = ms => new Promise(res => setTimeout(res, ms));
-    const T_WAIT = 0.1; // Time between commands
+    const T_WAIT = 0.4; // Time between commands
     const number_of_quizzes = 5;
     const number_of_tries_to_check_random = 5;
 
@@ -622,9 +622,6 @@ describe("(Checks) Entrega5_BBDD", function () {
             Utils.search(s1, output).should.be.equal(true);
             Utils.search(s2, output).should.be.equal(true);
             
-            console.log(output.toString().toLowerCase().indexOf(u1.name.toLowerCase()));
-            console.log(output.toString().toLowerCase().indexOf(u2.name.toLowerCase()));
-
             let posU1 = output.toString().toLowerCase().indexOf(u1.name.toLowerCase());
             let posU2 = output.toString().toLowerCase().indexOf(u2.name.toLowerCase());
 
