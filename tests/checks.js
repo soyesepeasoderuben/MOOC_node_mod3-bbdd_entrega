@@ -14,11 +14,11 @@ const T_TEST = 2 * 60; // Time between tests (seconds)
 let error_critical = null;
 
 //TESTS
-describe("Entrega5_BBDD_Dependencias", function () {
+describe("(Prechecks) Entrega5_BBDD_Dependencias", function () {
 
     this.timeout(T_TEST * 1000);
 
-    it("Comprobando que las dependencias están instaladas...", async function () {
+    it("(Precheck) Comprobando que las dependencias están instaladas...", async function () {
         this.score = 0;
         this.msg_ok = `Encontrado el directorio '${node_modules}'`;
         this.msg_err = `No se encontró el directorio '${node_modules}'`;
@@ -31,7 +31,7 @@ describe("Entrega5_BBDD_Dependencias", function () {
 
 });
 
-describe("Entrega5_BBDD_Modelos", function () {
+describe("(Prechecks) Entrega5_BBDD_Modelos", function () {
 
     this.timeout(T_TEST * 1000);
 
@@ -72,6 +72,7 @@ describe("Entrega5_BBDD_Modelos", function () {
         }
         res[0].length.should.be.equal(1);
     });
+
     it("(Precheck): Comprobando que existe el fichero de modelos...", async function () {
         this.score = 0;
         this.msg_ok = `Encontrado el fichero '${path_models}'`;
@@ -82,20 +83,22 @@ describe("Entrega5_BBDD_Modelos", function () {
         }
         fileexists.should.be.equal(true);
     });
+
     it("(Precheck): Comprobando que existe el modelo User...", async function () {
         this.score = 0;
         this.msg_ok = `Encontrado el modelo User`;
-        this.msg_err = `No se encontró el modeo User`;
+        this.msg_err = `No se encontró el modelo User`;
         const { User } = require(path_models).models;
         if (!User) {
             error_critical = this.msg_err;
         }
         User.should.not.be.undefined;
     });
+
     it("(Precheck): Comprobando que existe el modelo Quiz...", async function () {
         this.score = 0;
         this.msg_ok = `Encontrado el modelo Quiz`;
-        this.msg_err = `No se encontró el modeo Quiz`;
+        this.msg_err = `No se encontró el modelo Quiz`;
         const { Quiz } = require(path_models).models;
         if (!Quiz) {
             error_critical = this.msg_err;
@@ -104,7 +107,7 @@ describe("Entrega5_BBDD_Modelos", function () {
     });
 });
 
-describe("Entrega5_BBDD_Checks", function () {
+describe("(Checks) Entrega5_BBDD", function () {
 
     const spawn = require("child_process").spawn;
     const timeout = ms => new Promise(res => setTimeout(res, ms));
@@ -115,6 +118,7 @@ describe("Entrega5_BBDD_Checks", function () {
     this.timeout(T_TEST * 1000);
 
     var added_quizzes = [];
+    var added_users = [];
     let client = null;
 
     before(async function() {
@@ -122,6 +126,16 @@ describe("Entrega5_BBDD_Checks", function () {
         sequelize = new Sequelize(database, options);
         User = require(path_models).models.User;
         Quiz = require(path_models).models.Quiz;
+
+        let name = Utils.makeString(20);
+        let age = Utils.makeInteger(0, 140);
+
+        let u = await User.create( 
+          { name, age }
+        );
+
+        added_users.push(u);
+
         let quizzes = await Quiz.findAll();
 
         if (quizzes.length < number_of_quizzes) {
@@ -131,16 +145,16 @@ describe("Entrega5_BBDD_Checks", function () {
                 let q = await Quiz.create( 
                   { question,
                     answer,
-                    authorId: 1
+                    authorId: u.id
                   }
                 );
-                added_quizzes.push(q.id);
+                added_quizzes.push(q);
             }
         }
     });
 
     it("1: Comprobando que el comando p está soportado...", async function () {
-        this.score = 10;
+        this.score = 0.5;
         if (error_critical) {
             this.msg_err = error_critical;
             should.not.exist(error_critical);
@@ -174,7 +188,7 @@ describe("Entrega5_BBDD_Checks", function () {
     });
 
     it("2: Comprobando que el comando p muestra la pregunta de un quiz de la base de datos...", async function () {
-        this.score = 10;
+        this.score = 1;
         if (error_critical) {
             this.msg_err = error_critical;
             should.not.exist(error_critical);
@@ -209,7 +223,7 @@ describe("Entrega5_BBDD_Checks", function () {
     });
 
     it("3: Comprobando que el comando p muestra las preguntas de manera aleatoria...", async function () {
-        this.score = 10;
+        this.score = 0.5;
         if (error_critical) {
             this.msg_err = error_critical;
             should.not.exist(error_critical);
@@ -253,7 +267,7 @@ describe("Entrega5_BBDD_Checks", function () {
     });
 
     it("4: Comprobando que al contestar correctamente a una pregunta se muestra el mensaje correspondiente y la siguiente si hay más disponibles...", async function () {
-        this.score = 10;
+        this.score = 0.5;
         if (error_critical) {
             this.msg_err = error_critical;
             should.not.exist(error_critical);
@@ -302,7 +316,7 @@ describe("Entrega5_BBDD_Checks", function () {
     });
 
     it("5: Comprobando que al contestar correctamente a una pregunta se muestra el mensaje correspondiente y la puntuación si no hay más disponibles...", async function () {
-        this.score = 10;
+        this.score = 0.5;
         if (error_critical) {
             this.msg_err = error_critical;
             should.not.exist(error_critical);
@@ -352,7 +366,7 @@ describe("Entrega5_BBDD_Checks", function () {
     });
 
     it("6: Comprobando que al contestar incorrectamente a una pregunta se muestra el mensaje correspondiente y la puntuación...", async function () {
-        this.score = 10;
+        this.score = 1;
         if (error_critical) {
             this.msg_err = error_critical;
             should.not.exist(error_critical);
@@ -393,15 +407,254 @@ describe("Entrega5_BBDD_Checks", function () {
         }
     });
 
-    after(function() {
+    it("7: Comprobando que el modelo Score existe y es correcto...", async function () {
+        this.score = 1;
+        this.msg_ok = `Encontrado el modelo Score y es correcto`;
+        this.msg_err = `No se encontró el modelo Score o falla alguno de sus requsitos`;
+        const { Score } = require(path_models).models;
+        Score.should.not.be.undefined;
+        Score.rawAttributes.wins.should.not.be.undefined;
+        Score.rawAttributes.wins.type.key.should.be.equal('INTEGER');
+        Score.rawAttributes.wins.allowNull.should.be.equal(false);
+
+        if (!Score.rawAttributes.userId) 
+            this.msg_err += '. Has creado las relaciones entre los modelos Score y User?'
+
+        Score.rawAttributes.userId.should.not.be.undefined;
+        Score.rawAttributes.userId.references.model.should.be.equal('Users');
+    });
+
+    it("8: Comprobando que la tabla Scores existe en la base de datos y es correcta...", async function () {
+        this.score = 1;
+        this.msg_ok = `Encontrada la tabla Scores en la base de datos '${database}' y es correcta`;
+        this.msg_err = `No se encontró la tabla Scores en la base de datos '${database}' o no es correcta`;
+        const res = await sequelize.query("SELECT name FROM sqlite_master WHERE type='table' AND name='Scores'");
+        res[0].length.should.be.equal(1);
+        
+        const res2 = await sequelize.query("SELECT sql FROM sqlite_master WHERE type='table' AND name='Scores'");
+        if (!Utils.search('createdAt', res2[0][0].sql)) 
+            this.msg_err += '. Tiene fecha de creación la tabla en la migración?'
+        Utils.search('createdAt', res2[0][0].sql).should.be.equal(true);
+        
+        if (!Utils.search('REFERENCES', res2[0][0].sql)) 
+            this.msg_err += '. Has creado las relaciones entre los modelos Score y User en la migración?';
+        Utils.search('REFERENCES', res2[0][0].sql).should.be.equal(true);
+
+    });
+
+    it("9: Comprobando que al terminar de jugar se almacena la puntuación de un usuario existente en la base de datos...", async function () {
+        this.score = 1.5;
+        if (error_critical) {
+            this.msg_err = error_critical;
+            should.not.exist(error_critical);
+        } else {
+            this.msg_err = "Al terminar de jugar no se almacena la puntuación de un usuario existente en la base de datos";
+            this.msg_ok = "Al terminar de jugar se almacena la puntuación de un usuario existente en la base de datos";
+
+            const input = ["p"];
+            let output = "";
+            let error_std = "";
+
+            client = spawn("node", ["main.js"], {cwd: path_assignment});
+            client.on('error', function (data) {
+                error_std += data;
+            });
+            client.stdout.on('data', function (data) {
+                output += data;
+            });
+            await timeout(T_WAIT * 1000);
+            client.stdin.write(input[0] + "\n");
+            await timeout(T_WAIT * 1000);
+            
+            let question = output.split('>   ')[1].split(': ')[0];
+            let q = await Quiz.findOne({where: {question}});
+            
+            output = "";
+            client.stdin.write(Utils.makeString(20) + "\n");
+            await timeout(T_WAIT * 1000);
+
+            client.stdin.write(added_users[0].name + "\n");
+            await timeout(T_WAIT * 1000);
+            
+            
+            Score = require(path_models).models.Score;
+
+            let u = await User.findOne({
+                where: {name: added_users[0].name},
+                include: [
+                  { model: Score, as: 'scores'}
+                ]
+            });
+
+            if (client) {
+                client.kill();
+            }
+
+            should.not.equal(u, null);
+            should.not.equal(u.scores.length, 0);
+            u.scores[0].wins.should.be.equal(0);
+        }
+    });
+
+    it("10: Comprobando que al terminar de jugar se almacena la puntuación de un usuario no existente en la base de datos...", async function () {
+        this.score = 1.5;
+        if (error_critical) {
+            this.msg_err = error_critical;
+            should.not.exist(error_critical);
+        } else {
+            this.msg_err = "Al terminar de jugar no se almacena la puntuación de un usuario no existente en la base de datos";
+            this.msg_ok = "Al terminar de jugar se almacena la puntuación de un usuario no existente en la base de datos";
+
+            const input = ["p"];
+            let output = "";
+            let error_std = "";
+
+            client = spawn("node", ["main.js"], {cwd: path_assignment});
+            client.on('error', function (data) {
+                error_std += data;
+            });
+            client.stdout.on('data', function (data) {
+                output += data;
+            });
+            await timeout(T_WAIT * 1000);
+            client.stdin.write(input[0] + "\n");
+            await timeout(T_WAIT * 1000);
+
+            let question = output.split('>   ')[1].split(': ')[0];
+            let q = await Quiz.findOne({where: {question}});
+            
+            output = "";
+            client.stdin.write(q.answer + "\n");
+            await timeout(T_WAIT * 1000);
+
+            for (let i = 0; i < 2; i++) {
+                question = output.split('\n  ')[1].split(': ')[0];
+                output = "";
+                q = await Quiz.findOne({where: {question}});
+                client.stdin.write(q.answer + "\n");
+                await timeout(T_WAIT * 1000);
+            }
+
+            question = output.split('\n  ')[1].split(': ')[0];
+            output = "";
+
+            q = await Quiz.findOne({where: {question}})
+            client.stdin.write(Utils.makeString(20) + "\n");
+            await timeout(T_WAIT * 1000);
+
+            let name = Utils.makeString(20);
+
+            client.stdin.write(name + "\n");
+            await timeout(T_WAIT * 1000);
+            
+            Score = require(path_models).models.Score;
+
+            let u = await User.findOne({
+                where: {name: name},
+                include: [
+                  { model: Score, as: 'scores'}
+                ]
+            });
+
+            added_users.push(u);
+
+            if (client) {
+                client.kill();
+            }
+
+            should.not.equal(u, null);
+            should.not.equal(u.scores.length, 0);
+            u.scores[0].wins.should.be.equal(3);
+        }
+    });
+
+    it("11: Comprobando que las puntuaciones se muestran correctamente al usar el comando ls...", async function () {
+        this.score = 1;
+        if (error_critical) {
+            this.msg_err = error_critical;
+            should.not.exist(error_critical);
+        } else {
+            this.msg_err = "Las puntuaciones no se muestran correctamente al usar el comando ls";
+            this.msg_ok = "Las puntuaciones se muestran correctamente al usar el comando ls";
+
+            const input = ["ls"];
+
+            let output = "";
+            let error_std = "";
+
+            client = spawn("node", ["main.js"], {cwd: path_assignment});
+            client.on('error', function (data) {
+                error_std += data
+            });
+            client.stdout.on('data', function (data) {
+                output += data
+            });
+            await timeout(T_WAIT * 1000);
+            client.stdin.write(input[0] + "\n");
+            await timeout(T_WAIT * 1000);
+            if (client) {
+                client.kill();
+            }
+
+            error_std.should.be.equal("");
+            Utils.search('UNSUPPORTED COMMAND', output).should.be.equal(false);
+            Utils.search('TypeError', output).should.be.equal(false);
+
+
+            let u1 =  await User.findOne({
+                where: {name: added_users[0].name},
+                include: [
+                  { model: Score, as: 'scores'}
+                ]
+            });
+
+            let s1 = `${u1.name}|0|`;
+
+            let u2 =  await User.findOne({
+                where: {name: added_users[1].name},
+                include: [
+                  { model: Score, as: 'scores'}
+                ]
+            });
+
+            let s2 = `${u2.name}|3|`;
+
+            Utils.search(s1, output).should.be.equal(true);
+            Utils.search(s2, output).should.be.equal(true);
+            
+            console.log(output.toString().toLowerCase().indexOf(u1.name.toLowerCase()));
+            console.log(output.toString().toLowerCase().indexOf(u2.name.toLowerCase()));
+
+            let posU1 = output.toString().toLowerCase().indexOf(u1.name.toLowerCase());
+            let posU2 = output.toString().toLowerCase().indexOf(u2.name.toLowerCase());
+
+            if (posU2 > posU1)
+                this.msg_err += '. Están las puntuaciones ordenadas?';
+            (posU2 < posU1).should.be.equal(true);
+        }
+    });
+
+    afterEach(function () {
+        if (client) {
+            client.kill();
+        }
+    });
+
+    after(async function() {
         const { Sequelize } = require('sequelize');
         sequelize = new Sequelize(database, options);
         User = require(path_models).models.User;
         Quiz = require(path_models).models.Quiz;
 
         added_quizzes.forEach( 
-            async id => { 
-                await Quiz.destroy({where: {id}});
+            async q => { 
+                await q.destroy();
+            }
+        );
+
+        added_users.forEach( 
+            async u => { 
+                await u.destroy();
             }
         );
 

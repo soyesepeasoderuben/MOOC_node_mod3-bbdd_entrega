@@ -50,20 +50,19 @@ Debe incluirse el nuevo comando ``p`` (play) que comienza una nueva ronda de pre
 - Si se contesta correctamente a un quiz y no hay más quizzes disponibles se muestra el mensaje ``  The answer "xxxxxxx" is right!`` usando la función ``rl.log`` y después la puntuación obtenida (número de aciertos) con el formato ``Score: X`` y usando la función ``rl.log``. Después se vuelve al menú principal.
 - Si se contesta incorrectamente a un quiz se muestra el mensaje ``  The answer "xxxxxxx" is wrong!`` usando la función ``rl.log`` y después se muestra por pantalla la puntuación obtenida (número de aciertos) con el formato ``Score: X`` y usando la función ``rl.log``. Después se vuelve al menú principal.
 
-### Funcionalidad puntuaciones
+### Funcionalidad scores
 
 Las puntuaciones obtenidas por un usuario registrado deben almacenarse en la base de datos al terminar una ronda de preguntas. Además las puntuaciones de los usuarios deben poder consultarse en cualquier momento usando el nuevo comando ``ls`` (list score). Para ello deben realizarse los siguientes pasos: 
 
 1. Incluir un nuevo modelo ``Score`` así como su relación con la tabla de usuarios. Hay que tener en cuenta que para un mismo usuario se almacenarán varias puntuaciones, una por cada vez que juegue. La tabla ``Score`` almacenará los siguientes atributos:
-	- Atributo ``score`` de tipo entero que indica el número de quizzes contestados correctamente.
-	- Atributo ``date`` de tipo fecha que indica la fecha en la que se consiguió la puntuación.
-	- Referencia al identificador de usuario de la tabla User.
+	- Atributo ``wins`` de tipo entero que indica el número de quizzes contestados correctamente. No puede ser nulo y debe ser mayor que 0.
+	- Referencia al identificador de usuario de la tabla User llamado ``userId``.
 
-2. Implementar una migración de la base de datos para crear la nueva tabla.
+2. Implementar una migración de la base de datos para crear la nueva tabla ``Scores``.
 
-3. Ampliar la funcionalidad play para solicitar el nombre de usuario al finalizar el juego y para almacenar la puntuación asociada a dicho usuario en la base de datos. En caso de que el usuario introducido no exista se creará un nuevo usuario con el nombre introducido. 
+3. Ampliar la funcionalidad play para solicitar el nombre de usuario al finalizar el juego y para almacenar la puntuación asociada a dicho usuario en la base de datos. En caso de que el usuario introducido no exista se creará un nuevo usuario con el nombre introducido y edad 0. 
 
-4. Implementar la funcionalidad del nuevo comando ``ls`` (list score) que pinta una lista de las puntaciones ordenadas de mayor a menor con el siguiente formato (para dar formato a la fecha se debe utilizar el método ``toUTCString()`` del objeto ``Date``): 
+4. Implementar la funcionalidad del nuevo comando ``ls`` (list score) que pinta una lista (cada línea debe pintarse con la función ``rl.log``) de las puntaciones ordenadas de mayor a menor con el siguiente formato (para dar formato a la fecha se debe utilizar el método ``toUTCString()`` del objeto ``Date``): 
 
 
 ```
@@ -73,6 +72,7 @@ Kike|2|Tue, 18 Feb 2020 14:20:27 GMT
 Patri|1|Tue, 18 Feb 2020 14:20:27 GMT
 ```
 
+**Nota importante!!**: Si durante el desarrollo de la práctica crees que has podido "romper" la base de datos o crear alguna inconsistencia siempre puedes reiniciar su estado incial eliminando el fichero ``db.sqlite`` y ejecutando de nuevo los comandos ``npm run migrate`` y ``npm run seed``
 
 ## Prueba de la práctica 
 
@@ -95,6 +95,8 @@ $ npx autocorector             ## Pasa los tests al fichero a entregar
 ```
 
 Se puede pasar la herramienta de autocorrección tantas veces como se desee sin ninguna repercusión en la calificación.
+
+**Nota importante!!**: Tenga en cuenta que en esta práctica el autocorrector comprueba, entre otras cosas, la entrada y salida de la consola en su programa para validar los resultados. Tenga cuidado por lo tanto con los logs que utilice a modo de depuración durante el desarrollo ya que podrían interferir en dicha salida y entrada alterando el resultado de las pruebas. Ante la duda comente los logs a la hora de pasar los tests. 
 
 ## Instrucciones para la Entrega y Evaluación.
 
