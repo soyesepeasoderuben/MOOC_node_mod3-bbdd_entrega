@@ -6,7 +6,7 @@
 
 # Entrega5_BBDD
 
-Versión: 18 de Febrero de 2020
+Versión: 25 de Febrero de 2020
 
 ## Objetivos
  * Afianzar los conocimientos obtenidos sobre el desarrollo de programas interactivos con Node.js
@@ -31,9 +31,9 @@ $ cd Entrega5_BBDD
 $
 $ npm install
 $
-$ npm run migrate
+$ npm run migrate   ## En Windows: npx sequelize db:migrate --url sqlite://$(pwd -W)/db.sqlite
 $
-$ npm run seed
+$ npm run seed      ## En Windows: npx sequelize db:seed:all --url sqlite://$(pwd -W)/db.sqlite
 $
 $ npm start     ##  or 'node main'
 ....
