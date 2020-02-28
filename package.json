@@ -13,6 +13,8 @@
     "scripts": {
         "migrate": "sequelize db:migrate --url sqlite://$(pwd)/db.sqlite",
         "seed": "sequelize db:seed:all --url sqlite://$(pwd)/db.sqlite",
+        "migrate_win": "sequelize db:migrate --url sqlite://%cd%/db.sqlite",
+        "seed_win": "sequelize db:migrate --url sqlite://%cd%/db.sqlite",
         "start": "node main.js"
     },
     "dependencies": {
