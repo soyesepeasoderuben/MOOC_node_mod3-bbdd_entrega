@@ -6,7 +6,7 @@
 
 # Entrega5_BBDD
 
-Versión: 25 de Febrero de 2020
+Versión: 28 de Febrero de 2020
 
 ## Objetivos
  * Afianzar los conocimientos obtenidos sobre el desarrollo de programas interactivos con Node.js
@@ -19,7 +19,7 @@ Esta práctica consiste en la ampliación del proyecto de gestión de usuarios y
 
 ## Descargar el código del proyecto
 
-Es necesario utilizar la versión 12 de Node.js para el desarrollo de esta práctica. El proyecto debe clonarse en el ordenador desde el que se está trabajando: 
+Es necesario utilizar la **versión 12 de Node.js** para el desarrollo de esta práctica. El proyecto debe clonarse en el ordenador desde el que se está trabajando: 
 
 ```
 $ git clone https://github.com/CORE-2020/Entrega5_BBDD
@@ -31,9 +31,9 @@ $ cd Entrega5_BBDD
 $
 $ npm install
 $
-$ npm run migrate   ## En Windows: npx sequelize db:migrate --url sqlite://$(pwd -W)/db.sqlite
+$ npm run migrate   ## En Windows: npm run migrate_win
 $
-$ npm run seed      ## En Windows: npx sequelize db:seed:all --url sqlite://$(pwd -W)/db.sqlite
+$ npm run seed      ## En Windows: npm run seed_win
 $
 $ npm start     ##  or 'node main'
 ....
