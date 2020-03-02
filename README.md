@@ -78,7 +78,7 @@ Debe incluirse el nuevo comando ``p`` (play) que comienza una nueva ronda de pre
 Las puntuaciones obtenidas por un usuario registrado deben almacenarse en la base de datos al terminar una ronda de preguntas. Además las puntuaciones de los usuarios deben poder consultarse en cualquier momento usando el nuevo comando ``ls`` (list score). Para ello deben realizarse los siguientes pasos: 
 
 1. Incluir un nuevo modelo ``Score`` así como su relación con la tabla de usuarios. Hay que tener en cuenta que para un mismo usuario se almacenarán varias puntuaciones, una por cada vez que juegue (debe utilizarse el alias ``scores`` para referenciar las puntuaciones asociadas a un usuario). La tabla ``Scores`` almacenará los siguientes atributos:
-	- Atributo ``wins`` de tipo entero que indica el número de quizzes contestados correctamente. No puede ser nulo y debe ser mayor que 0.
+	- Atributo ``wins`` de tipo entero que indica el número de quizzes contestados correctamente. No puede ser nulo y debe ser mayor o igual que 0.
 	- Referencia ``userId`` al identificador de usuario de la tabla User.
 
 2. Implementar una migración de la base de datos para crear la nueva tabla ``Scores``.
