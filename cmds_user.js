@@ -36,10 +36,10 @@ exports.list = async (rl) => {
 // Create user with age in the DB
 exports.create = async (rl) => {
 
-  let name = await rl.questionSync(rl, "Enter name");
+  let name = await rl.questionP("Enter name");
   if (!name) throw new Error("Response can't be empty!");
 
-  let age = await rl.questionSync(rl, "Enter age");
+  let age = await rl.questionP("Enter age");
   if (!age) throw new Error("Response can't be empty!");
 
   await User.create( 
@@ -51,7 +51,7 @@ exports.create = async (rl) => {
 // Show user's age, quizzes & favourites
 exports.read = async (rl) => {
 
-  let name = await rl.questionSync(rl, "Enter name");
+  let name = await rl.questionP("Enter name");
   if (!name) throw new Error("Response can't be empty!");
 
   let user = await User.findOne({
@@ -81,13 +81,13 @@ if (!user) throw new Error(`  '${name}' is not in DB`);
 // Update the user (identified by name) in the DB
 exports.update = async (rl) => {
 
-  let old_name = await rl.questionSync(rl, "Enter name to update");
+  let old_name = await rl.questionP("Enter name to update");
   if (!old_name) throw new Error("Response can't be empty!");
 
-  let name = await rl.questionSync(rl, "Enter new name");
+  let name = await rl.questionP("Enter new name");
   if (!name) throw new Error("Response can't be empty!");
 
-  let age = await rl.questionSync(rl, "Enter new age");
+  let age = await rl.questionP("Enter new age");
   if (!age) throw new Error("Response can't be empty!");
 
   let n = await User.update(
@@ -102,7 +102,7 @@ exports.update = async (rl) => {
 // Delete user & his quizzes/favourites (relation: onDelete: 'cascade')
 exports.delete = async (rl) => {
 
-  let name = await rl.questionSync(rl, "Enter name");
+  let name = await rl.questionP("Enter name");
   if (!name) throw new Error("Response can't be empty!");
 
   let n = await User.destroy(

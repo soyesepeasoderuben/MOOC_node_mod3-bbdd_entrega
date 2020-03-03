@@ -19,8 +19,8 @@ exports.list = async (rl) => {
 // Create favourite in the DB
 exports.create = async (rl) => {
 
-  let name = await rl.questionSync(rl, "Enter name");
-  let id = await rl.questionSync(rl, "Enter quiz id");
+  let name = await rl.questionP("Enter name");
+  let id = await rl.questionP("Enter quiz id");
   if (!name || !id) throw new Error("Response can't be empty!");
 
   let user = await User.findOne({where: {name}});
@@ -37,8 +37,8 @@ exports.create = async (rl) => {
 // Delete favourite in the DB
 exports.delete = async (rl) => {
 
-  let name = await rl.questionSync(rl, "Enter name");
-  let id = await rl.questionSync(rl, "Enter quiz id");
+  let name = await rl.questionP("Enter name");
+  let id = await rl.questionP("Enter quiz id");
   if (!name || !id) throw new Error("Response can't be empty!");
 
   let user = await User.findOne({where: {name}});

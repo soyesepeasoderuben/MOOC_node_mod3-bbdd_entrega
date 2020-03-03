@@ -6,7 +6,7 @@
 
 # Entrega5_BBDD
 
-Versión: 2 de marzo de 2020
+Versión: 3 de marzo de 2020
 
 ## Objetivos
  * Afianzar los conocimientos obtenidos sobre el desarrollo de programas interactivos con Node.js
@@ -67,9 +67,9 @@ El alumno debe implementar las siguientes nuevas funcionalidades sobre el proyec
 
 ### Funcionalidad play
 
-Debe incluirse el nuevo comando ``p`` (play) que comienza una nueva ronda de preguntas. Al ejecutar este comando los quizzes almacenados en el sistema (en concreto el campo ``question`` de cada quiz) van mostrándose (usando la función ``rl.questionSync``) de manera aleatoria y consecutiva para tratar de contestarlos.
+Debe incluirse el nuevo comando ``p`` (play) que comienza una nueva ronda de preguntas. Al ejecutar este comando los quizzes almacenados en el sistema (en concreto el campo ``question`` de cada quiz) van mostrándose (usando la función ``rl.questionP``) de manera aleatoria y consecutiva para tratar de contestarlos.
 
-- Si se contesta correctamente a un quiz y hay más quizzes disponibles se muestra el mensaje ``  The answer "xxxxxxx" is right!`` usando la función ``rl.log`` y después la pregunta siguiente (usando la función ``rl.questionSync``) siguiendo un orden aleatorio.
+- Si se contesta correctamente a un quiz y hay más quizzes disponibles se muestra el mensaje ``  The answer "xxxxxxx" is right!`` usando la función ``rl.log`` y después la pregunta siguiente (usando la función ``rl.questionP``) siguiendo un orden aleatorio.
 - Si se contesta correctamente a un quiz y no hay más quizzes disponibles se muestra el mensaje ``  The answer "xxxxxxx" is right!`` usando la función ``rl.log`` y después la puntuación obtenida (número de aciertos) con el formato ``Score: X`` y usando la función ``rl.log``.
 - Si se contesta incorrectamente a un quiz se muestra el mensaje ``  The answer "xxxxxxx" is wrong!`` usando la función ``rl.log`` y después se muestra por pantalla la puntuación obtenida (número de aciertos) con el formato ``Score: X`` y usando la función ``rl.log``.
 
@@ -83,7 +83,7 @@ Las puntuaciones obtenidas por un usuario registrado deben almacenarse en la bas
 
 2. Implementar una migración de la base de datos para crear la nueva tabla ``Scores``.
 
-3. Ampliar la funcionalidad play para solicitar el nombre de usuario (usando la función ``rl.questionSync``) al finalizar el juego y para almacenar la puntuación asociada a dicho usuario en la tabla ``Scores`` de la base de datos. En caso de que el usuario introducido no exista se creará un nuevo usuario con el nombre introducido y edad 0. 
+3. Ampliar la funcionalidad play para solicitar el nombre de usuario (usando la función ``rl.questionP``) al finalizar el juego y para almacenar la puntuación asociada a dicho usuario en la tabla ``Scores`` de la base de datos. En caso de que el usuario introducido no exista se creará un nuevo usuario con el nombre introducido y edad 0. 
 
 4. Implementar la funcionalidad del nuevo comando ``ls`` (list score) que pinta una lista (cada línea debe pintarse con la función ``rl.log``) de las puntaciones almacenadas en la base de datos ordenadas de mayor a menor con el siguiente formato (para dar formato a la fecha se debe utilizar el método ``toUTCString()`` del objeto ``Date``): 
 
