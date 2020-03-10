@@ -111,7 +111,7 @@ describe("(Checks) Entrega5_BBDD", function () {
 
     const spawn = require("child_process").spawn;
     const timeout = ms => new Promise(res => setTimeout(res, ms));
-    const T_WAIT = 0.4; // Time between commands
+    const T_WAIT = 1; // Time between commands
     const number_of_quizzes = 5;
     const number_of_tries_to_check_random = 5;
 
