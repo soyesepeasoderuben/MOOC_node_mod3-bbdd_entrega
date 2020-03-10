@@ -215,8 +215,13 @@ describe("(Checks) Entrega5_BBDD", function () {
                 client.kill();
             }
 
+            console.log('++++' + output + '++++');
+
             let question = output.split('>   ')[1].split(': ')[0];
             let q = await Quiz.findOne({where: {question}});
+            if (q === null) {
+                this.msg_err += '. No se encuentra en la BBDD: ----' + question + '----';
+            }
             error_std.should.be.equal("");
             should.not.equal(q, null);
         }
