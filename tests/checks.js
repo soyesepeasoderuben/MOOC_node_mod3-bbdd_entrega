@@ -215,8 +215,6 @@ describe("(Checks) Entrega5_BBDD", function () {
                 client.kill();
             }
 
-            console.log('++++' + output + '++++');
-
             let question = output.split('>   ')[1].split(': ')[0];
             let q = await Quiz.findOne({where: {question}});
             if (q === null) {
