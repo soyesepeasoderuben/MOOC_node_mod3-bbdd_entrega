@@ -22,11 +22,13 @@ describe("(Prechecks) Entrega5_BBDD_Dependencias", function () {
         this.score = 0;
         this.msg_ok = `Encontrado el directorio '${node_modules}'`;
         this.msg_err = `No se encontró el directorio '${node_modules}'`;
-        const fileexists = await Utils.checkFileExists(node_modules);
-        if (!fileexists) {
-            error_critical = this.msg_err;
-        }
-        fileexists.should.be.equal(true);
+        try {
+            const fileexists = await Utils.checkFileExists(node_modules);
+            if (!fileexists) {
+                error_critical = this.msg_err;
+            }
+            fileexists.should.be.equal(true);
+        } catch (err) { error_critical = err;}
     });
 
 });
@@ -44,44 +46,53 @@ describe("(Prechecks) Entrega5_BBDD_Modelos", function () {
         this.score = 0;
         this.msg_ok = `Encontrada la tabla Users en la base de datos '${database}'`;
         this.msg_err = `No se encontró la tabla Users en la base de datos '${database}'`;
-        const res = await sequelize.query("SELECT name FROM sqlite_master WHERE type='table' AND name='Users'");
-        if (res[0].length !== 1) {
-            error_critical = this.msg_err;
-        }
-        res[0].length.should.be.equal(1);
+        try {
+            const res = await sequelize.query("SELECT name FROM sqlite_master WHERE type='table' AND name='Users'");
+      
+            if (res[0].length !== 1) {
+                error_critical = this.msg_err;
+            }
+            res[0].length.should.be.equal(1);
+        } catch (err) { error_critical = err;}
     });
 
     it("(Precheck): Comprobando que la tabla Quizzes existe en la base de datos...", async function () {
         this.score = 0;
         this.msg_ok = `Encontrada la tabla Quizzes en la base de datos '${database}'`;
         this.msg_err = `No se encontró la tabla Quizzes en la base de datos '${database}'`;
-        const res = await sequelize.query("SELECT name FROM sqlite_master WHERE type='table' AND name='Quizzes'");
-        if (res[0].length !== 1) {
-            error_critical = this.msg_err;
-        }
-        res[0].length.should.be.equal(1);
+        try {
+            const res = await sequelize.query("SELECT name FROM sqlite_master WHERE type='table' AND name='Quizzes'");
+            if (res[0].length !== 1) {
+                error_critical = this.msg_err;
+            }
+            res[0].length.should.be.equal(1);
+        } catch (err) { error_critical = err;}
     });
 
     it("(Precheck): Comprobando que la tabla Favourites existe en la base de datos...", async function () {
         this.score = 0;
         this.msg_ok = `Encontrada la tabla Favourites en la base de datos '${database}'`;
         this.msg_err = `No se encontró la tabla Favourites en la base de datos '${database}'`;
-        const res = await sequelize.query("SELECT name FROM sqlite_master WHERE type='table' AND name='Favourites'");
-        if (res[0].length !== 1) {
-            error_critical = this.msg_err;
-        }
-        res[0].length.should.be.equal(1);
+        try {
+            const res = await sequelize.query("SELECT name FROM sqlite_master WHERE type='table' AND name='Favourites'");
+            if (res[0].length !== 1) {
+                error_critical = this.msg_err;
+            }
+            res[0].length.should.be.equal(1);
+        } catch (err) { error_critical = err;}
     });
 
     it("(Precheck): Comprobando que existe el fichero de modelos...", async function () {
         this.score = 0;
         this.msg_ok = `Encontrado el fichero '${path_models}'`;
         this.msg_err = `No se encontró el fichero '${path_models}'`;
-        const fileexists = await Utils.checkFileExists(path_models);
-        if (!fileexists) {
-            error_critical = this.msg_err;
-        }
-        fileexists.should.be.equal(true);
+        try {
+            const fileexists = await Utils.checkFileExists(path_models);
+            if (!fileexists) {
+                error_critical = this.msg_err;
+            }
+            fileexists.should.be.equal(true);
+        } catch (err) { error_critical = err;}
     });
 
     it("(Precheck): Comprobando que existe el modelo User...", async function () {
@@ -130,27 +141,30 @@ describe("(Checks) Entrega5_BBDD", function () {
         let name = Utils.makeString(20);
         let age = Utils.makeInteger(0, 140);
 
-        let u = await User.create( 
-          { name, age }
-        );
+        try {
 
-        added_users.push(u);
+            let u = await User.create( 
+              { name, age }
+            );
 
-        let quizzes = await Quiz.findAll();
+            added_users.push(u);
 
-        if (quizzes.length < number_of_quizzes) {
-            for (let i = 0; i < number_of_quizzes - quizzes.length; i++) {
-                let question = Utils.makeString(20);
-                let answer = Utils.makeString(20);
-                let q = await Quiz.create( 
-                  { question,
-                    answer,
-                    authorId: u.id
-                  }
-                );
-                added_quizzes.push(q);
+            let quizzes = await Quiz.findAll();
+
+            if (quizzes.length < number_of_quizzes) {
+                for (let i = 0; i < number_of_quizzes - quizzes.length; i++) {
+                    let question = Utils.makeString(20);
+                    let answer = Utils.makeString(20);
+                    let q = await Quiz.create( 
+                      { question,
+                        answer,
+                        authorId: u.id
+                      }
+                    );
+                    added_quizzes.push(q);
+                }
             }
-        }
+        } catch (err) { error_critical = err;}
     });
 
     it("1: Comprobando que el comando p está soportado...", async function () {
@@ -216,12 +230,15 @@ describe("(Checks) Entrega5_BBDD", function () {
             }
 
             let question = output.split('>   ')[1].split(': ')[0];
-            let q = await Quiz.findOne({where: {question}});
-            if (q === null) {
-                this.msg_err += '. No se encuentra en la BBDD: ----' + question + '----';
-            }
-            error_std.should.be.equal("");
-            should.not.equal(q, null);
+
+            try {
+                let q = await Quiz.findOne({where: {question}});
+                if (q === null) {
+                    this.msg_err += '. No se encuentra en la BBDD: ----' + question + '----';
+                }
+                error_std.should.be.equal("");
+                should.not.equal(q, null);
+            } catch (err) { error_critical = err;}
         }
     });
 
@@ -239,33 +256,36 @@ describe("(Checks) Entrega5_BBDD", function () {
             let error_std = "";
             let last_question = null;
 
-            for (var i = 0; i < number_of_tries_to_check_random; i++) {
+            try {
 
-                output = "";
-                
-                client = spawn("node", ["main.js"], {cwd: path_assignment});
-                client.on('error', function (data) {
-                    error_std += data;
-                });
-                client.stdout.on('data', function (data) {
-                    output += data;
-                });
-                await timeout(T_WAIT * 1000);
-                client.stdin.write(input[0] + "\n");
-                await timeout(T_WAIT * 1000);
-                if (client) {
-                    client.kill();
+                for (var i = 0; i < number_of_tries_to_check_random; i++) {
+
+                    output = "";
+                    
+                    client = spawn("node", ["main.js"], {cwd: path_assignment});
+                    client.on('error', function (data) {
+                        error_std += data;
+                    });
+                    client.stdout.on('data', function (data) {
+                        output += data;
+                    });
+                    await timeout(T_WAIT * 1000);
+                    client.stdin.write(input[0] + "\n");
+                    await timeout(T_WAIT * 1000);
+                    if (client) {
+                        client.kill();
+                    }
+
+                    let question = output.split('>   ')[1].split(': ')[0];
+                    let q = await Quiz.findOne({where: {question}});
+
+                    if (last_question !== null && q.question !== last_question) break;
+
+                    last_question = q.question;
                 }
-
-                let question = output.split('>   ')[1].split(': ')[0];
-                let q = await Quiz.findOne({where: {question}});
-
-                if (last_question !== null && q.question !== last_question) break;
-
-                last_question = q.question;
-            }
-            error_std.should.be.equal("");
-            i.should.be.at.most(number_of_tries_to_check_random - 1);
+                error_std.should.be.equal("");
+                i.should.be.at.most(number_of_tries_to_check_random - 1);
+            } catch (err) { error_critical = err;}
         }
     });
 
@@ -294,27 +314,30 @@ describe("(Checks) Entrega5_BBDD", function () {
             await timeout(T_WAIT * 1000);
             
             let question = output.split('>   ')[1].split(': ')[0];
-            let q = await Quiz.findOne({where: {question}});
-            
-            output = "";
-            client.stdin.write(q.answer + "\n");
-            await timeout(T_WAIT * 1000);
-            
-            if (client) {
-                client.kill();
-            }
 
-            Utils.search('right', output).should.be.equal(true);
-            let newline = output.split('\n  ')[1];
-        
-            should.not.equal(newline, undefined);
+            try {
+                let q = await Quiz.findOne({where: {question}});
+                
+                output = "";
+                client.stdin.write(q.answer + "\n");
+                await timeout(T_WAIT * 1000);
+                
+                if (client) {
+                    client.kill();
+                }
 
-            question = newline.split(': ')[0];
+                Utils.search('right', output).should.be.equal(true);
+                let newline = output.split('\n  ')[1];
             
-            q = await Quiz.findOne({where: {question}});
-        
-            error_std.should.be.equal("");
-            should.not.equal(q, null);
+                should.not.equal(newline, undefined);
+
+                question = newline.split(': ')[0];
+                
+                q = await Quiz.findOne({where: {question}});
+            
+                error_std.should.be.equal("");
+                should.not.equal(q, null);
+            } catch (err) { error_critical = err;}
         }
     });
 
@@ -343,28 +366,31 @@ describe("(Checks) Entrega5_BBDD", function () {
             await timeout(T_WAIT * 1000);
             
             let question = output.split('>   ')[1].split(': ')[0];
-            let q = await Quiz.findOne({where: {question}});
-            
-            output = "";
-            client.stdin.write(q.answer + "\n");
-            await timeout(T_WAIT * 1000);
 
-            for (let i = 0; i < 4; i++) {
-                question = output.split('\n  ')[1].split(': ')[0];
+            try {
+                let q = await Quiz.findOne({where: {question}});
+                
                 output = "";
-                q = await Quiz.findOne({where: {question}});
                 client.stdin.write(q.answer + "\n");
                 await timeout(T_WAIT * 1000);
-            }
-            
-            if (client) {
-                client.kill();
-            }
-            
-            Utils.search('right', output).should.be.equal(true);
-            Utils.search('Score', output).should.be.equal(true);
-            Utils.search('5', output).should.be.equal(true);
-            error_std.should.be.equal("");
+
+                for (let i = 0; i < 4; i++) {
+                    question = output.split('\n  ')[1].split(': ')[0];
+                    output = "";
+                    q = await Quiz.findOne({where: {question}});
+                    client.stdin.write(q.answer + "\n");
+                    await timeout(T_WAIT * 1000);
+                }
+                
+                if (client) {
+                    client.kill();
+                }
+                
+                Utils.search('right', output).should.be.equal(true);
+                Utils.search('Score', output).should.be.equal(true);
+                Utils.search('5', output).should.be.equal(true);
+                error_std.should.be.equal("");
+            } catch (err) { error_critical = err;}
         }
     });
 
@@ -393,20 +419,23 @@ describe("(Checks) Entrega5_BBDD", function () {
             await timeout(T_WAIT * 1000);
             
             let question = output.split('>   ')[1].split(': ')[0];
-            let q = await Quiz.findOne({where: {question}});
-            
-            output = "";
-            client.stdin.write(Utils.makeString(20) + "\n");
-            await timeout(T_WAIT * 1000);
 
-            if (client) {
-                client.kill();
-            }
+            try {
+                let q = await Quiz.findOne({where: {question}});
+                
+                output = "";
+                client.stdin.write(Utils.makeString(20) + "\n");
+                await timeout(T_WAIT * 1000);
 
-            Utils.search('wrong', output).should.be.equal(true);
-            Utils.search('Score', output).should.be.equal(true);
-            Utils.search('0', output).should.be.equal(true);
-            error_std.should.be.equal("");
+                if (client) {
+                    client.kill();
+                }
+
+                Utils.search('wrong', output).should.be.equal(true);
+                Utils.search('Score', output).should.be.equal(true);
+                Utils.search('0', output).should.be.equal(true);
+                error_std.should.be.equal("");
+            } catch (err) { error_critical = err;}
         }
     });
 
@@ -431,17 +460,20 @@ describe("(Checks) Entrega5_BBDD", function () {
         this.score = 1;
         this.msg_ok = `Encontrada la tabla Scores en la base de datos '${database}' y es correcta`;
         this.msg_err = `No se encontró la tabla Scores en la base de datos '${database}' o no es correcta`;
-        const res = await sequelize.query("SELECT name FROM sqlite_master WHERE type='table' AND name='Scores'");
-        res[0].length.should.be.equal(1);
-        
-        const res2 = await sequelize.query("SELECT sql FROM sqlite_master WHERE type='table' AND name='Scores'");
-        if (!Utils.search('createdAt', res2[0][0].sql)) 
-            this.msg_err += '. Tiene fecha de creación la tabla en la migración?'
-        Utils.search('createdAt', res2[0][0].sql).should.be.equal(true);
-        
-        if (!Utils.search('REFERENCES', res2[0][0].sql)) 
-            this.msg_err += '. Has creado las relaciones entre los modelos Score y User en la migración?';
-        Utils.search('REFERENCES', res2[0][0].sql).should.be.equal(true);
+
+        try {
+            const res = await sequelize.query("SELECT name FROM sqlite_master WHERE type='table' AND name='Scores'");
+            res[0].length.should.be.equal(1);
+            
+            const res2 = await sequelize.query("SELECT sql FROM sqlite_master WHERE type='table' AND name='Scores'");
+            if (!Utils.search('createdAt', res2[0][0].sql)) 
+                this.msg_err += '. Tiene fecha de creación la tabla en la migración?'
+            Utils.search('createdAt', res2[0][0].sql).should.be.equal(true);
+            
+            if (!Utils.search('REFERENCES', res2[0][0].sql)) 
+                this.msg_err += '. Has creado las relaciones entre los modelos Score y User en la migración?';
+            Utils.search('REFERENCES', res2[0][0].sql).should.be.equal(true);
+        } catch (err) { error_critical = err;}
 
     });
 
@@ -470,32 +502,35 @@ describe("(Checks) Entrega5_BBDD", function () {
             await timeout(T_WAIT * 1000);
             
             let question = output.split('>   ')[1].split(': ')[0];
-            let q = await Quiz.findOne({where: {question}});
-            
-            output = "";
-            client.stdin.write(Utils.makeString(20) + "\n");
-            await timeout(T_WAIT * 1000);
 
-            client.stdin.write(added_users[0].name + "\n");
-            await timeout(T_WAIT * 1000);
-            
-            
-            Score = require(path_models).models.Score;
+            try {
+                let q = await Quiz.findOne({where: {question}});
+                
+                output = "";
+                client.stdin.write(Utils.makeString(20) + "\n");
+                await timeout(T_WAIT * 1000);
 
-            let u = await User.findOne({
-                where: {name: added_users[0].name},
-                include: [
-                  { model: Score, as: 'scores'}
-                ]
-            });
+                client.stdin.write(added_users[0].name + "\n");
+                await timeout(T_WAIT * 1000);
+                
+                
+                Score = require(path_models).models.Score;
 
-            if (client) {
-                client.kill();
-            }
+                let u = await User.findOne({
+                    where: {name: added_users[0].name},
+                    include: [
+                      { model: Score, as: 'scores'}
+                    ]
+                });
 
-            should.not.equal(u, null);
-            should.not.equal(u.scores.length, 0);
-            u.scores[0].wins.should.be.equal(0);
+                if (client) {
+                    client.kill();
+                }
+
+                should.not.equal(u, null);
+                should.not.equal(u.scores.length, 0);
+                u.scores[0].wins.should.be.equal(0);
+            } catch (err) { error_critical = err;}
         }
     });
 
@@ -524,50 +559,53 @@ describe("(Checks) Entrega5_BBDD", function () {
             await timeout(T_WAIT * 1000);
 
             let question = output.split('>   ')[1].split(': ')[0];
-            let q = await Quiz.findOne({where: {question}});
-            
-            output = "";
-            client.stdin.write(q.answer + "\n");
-            await timeout(T_WAIT * 1000);
 
-            for (let i = 0; i < 2; i++) {
-                question = output.split('\n  ')[1].split(': ')[0];
+            try {
+                let q = await Quiz.findOne({where: {question}});
+                
                 output = "";
-                q = await Quiz.findOne({where: {question}});
                 client.stdin.write(q.answer + "\n");
                 await timeout(T_WAIT * 1000);
-            }
 
-            question = output.split('\n  ')[1].split(': ')[0];
-            output = "";
+                for (let i = 0; i < 2; i++) {
+                    question = output.split('\n  ')[1].split(': ')[0];
+                    output = "";
+                    q = await Quiz.findOne({where: {question}});
+                    client.stdin.write(q.answer + "\n");
+                    await timeout(T_WAIT * 1000);
+                }
 
-            q = await Quiz.findOne({where: {question}})
-            client.stdin.write(Utils.makeString(20) + "\n");
-            await timeout(T_WAIT * 1000);
+                question = output.split('\n  ')[1].split(': ')[0];
+                output = "";
 
-            let name = Utils.makeString(20);
+                q = await Quiz.findOne({where: {question}})
+                client.stdin.write(Utils.makeString(20) + "\n");
+                await timeout(T_WAIT * 1000);
 
-            client.stdin.write(name + "\n");
-            await timeout(T_WAIT * 1000);
-            
-            Score = require(path_models).models.Score;
+                let name = Utils.makeString(20);
 
-            let u = await User.findOne({
-                where: {name: name},
-                include: [
-                  { model: Score, as: 'scores'}
-                ]
-            });
+                client.stdin.write(name + "\n");
+                await timeout(T_WAIT * 1000);
+                
+                Score = require(path_models).models.Score;
 
-            added_users.push(u);
+                let u = await User.findOne({
+                    where: {name: name},
+                    include: [
+                      { model: Score, as: 'scores'}
+                    ]
+                });
 
-            if (client) {
-                client.kill();
-            }
+                added_users.push(u);
 
-            should.not.equal(u, null);
-            should.not.equal(u.scores.length, 0);
-            u.scores[0].wins.should.be.equal(3);
+                if (client) {
+                    client.kill();
+                }
+
+                should.not.equal(u, null);
+                should.not.equal(u.scores.length, 0);
+                u.scores[0].wins.should.be.equal(3);
+            } catch (err) { error_critical = err;}
         }
     });
 
@@ -603,34 +641,36 @@ describe("(Checks) Entrega5_BBDD", function () {
             Utils.search('UNSUPPORTED COMMAND', output).should.be.equal(false);
             Utils.search('TypeError', output).should.be.equal(false);
 
+            try {
 
-            let u1 =  await User.findOne({
-                where: {name: added_users[0].name},
-                include: [
-                  { model: Score, as: 'scores'}
-                ]
-            });
+                let u1 =  await User.findOne({
+                    where: {name: added_users[0].name},
+                    include: [
+                      { model: Score, as: 'scores'}
+                    ]
+                });
 
-            let s1 = `${u1.name}|0|`;
+                let s1 = `${u1.name}|0|`;
 
-            let u2 =  await User.findOne({
-                where: {name: added_users[1].name},
-                include: [
-                  { model: Score, as: 'scores'}
-                ]
-            });
+                let u2 =  await User.findOne({
+                    where: {name: added_users[1].name},
+                    include: [
+                      { model: Score, as: 'scores'}
+                    ]
+                });
 
-            let s2 = `${u2.name}|3|`;
+                let s2 = `${u2.name}|3|`;
 
-            Utils.search(s1, output).should.be.equal(true);
-            Utils.search(s2, output).should.be.equal(true);
-            
-            let posU1 = output.toString().toLowerCase().indexOf(u1.name.toLowerCase());
-            let posU2 = output.toString().toLowerCase().indexOf(u2.name.toLowerCase());
+                Utils.search(s1, output).should.be.equal(true);
+                Utils.search(s2, output).should.be.equal(true);
+                
+                let posU1 = output.toString().toLowerCase().indexOf(u1.name.toLowerCase());
+                let posU2 = output.toString().toLowerCase().indexOf(u2.name.toLowerCase());
 
-            if (posU2 > posU1)
-                this.msg_err += '. Están las puntuaciones ordenadas?';
-            (posU2 < posU1).should.be.equal(true);
+                if (posU2 > posU1)
+                    this.msg_err += '. Están las puntuaciones ordenadas?';
+                (posU2 < posU1).should.be.equal(true);
+            } catch (err) { error_critical = err;}   
         }
     });
 
