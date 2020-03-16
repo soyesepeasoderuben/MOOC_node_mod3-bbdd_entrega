@@ -70,8 +70,8 @@ El alumno debe implementar las siguientes nuevas funcionalidades sobre el proyec
 Debe incluirse el nuevo comando ``p`` (play) que comienza una nueva ronda de preguntas. Al ejecutar este comando los quizzes almacenados en el sistema (en concreto el campo ``question`` de cada quiz) van mostrándose (usando la función ``rl.questionP``) de manera aleatoria y consecutiva para tratar de contestarlos.
 
 - Si se contesta correctamente a un quiz y hay más quizzes disponibles se muestra el mensaje ``  The answer "xxxxxxx" is right!`` usando la función ``rl.log`` y después la pregunta siguiente (usando la función ``rl.questionP``) siguiendo un orden aleatorio.
-- Si se contesta correctamente a un quiz y no hay más quizzes disponibles se muestra el mensaje ``  The answer "xxxxxxx" is right!`` usando la función ``rl.log`` y después la puntuación obtenida (número de aciertos) con el formato ``Score: X`` y usando la función ``rl.log``.
-- Si se contesta incorrectamente a un quiz se muestra el mensaje ``  The answer "xxxxxxx" is wrong!`` usando la función ``rl.log`` y después se muestra por pantalla la puntuación obtenida (número de aciertos) con el formato ``Score: X`` y usando la función ``rl.log``.
+- Si se contesta correctamente a un quiz y no hay más quizzes disponibles el juego termina y se muestra el mensaje ``  The answer "xxxxxxx" is right!`` usando la función ``rl.log``. Después se muestra la puntuación obtenida (número de aciertos) con el formato ``Score: X`` y usando la función ``rl.log``.
+- Si se contesta incorrectamente a un quiz el juego termina y se muestra el mensaje ``  The answer "xxxxxxx" is wrong!`` usando la función ``rl.log``. Después se muestra por pantalla la puntuación obtenida (número de aciertos) con el formato ``Score: X`` y usando la función ``rl.log``.
 
 ### Funcionalidad scores
 
