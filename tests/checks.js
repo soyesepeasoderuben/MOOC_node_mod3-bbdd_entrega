@@ -637,6 +637,9 @@ describe("(Checks) Entrega5_BBDD", function () {
                 client.kill();
             }
 
+            if (error_std !== "")
+                this.msg_err += '. Hay algún error de ejecución del comando?';
+
             error_std.should.be.equal("");
             Utils.search('UNSUPPORTED COMMAND', output).should.be.equal(false);
             Utils.search('TypeError', output).should.be.equal(false);
@@ -660,6 +663,9 @@ describe("(Checks) Entrega5_BBDD", function () {
                 });
 
                 let s2 = `${u2.name}|3|`;
+
+                if (!Utils.search(s1, output))
+                    this.msg_err += '. Estás pintando las puntuaciones de acuerdo al formato pedido?';
 
                 Utils.search(s1, output).should.be.equal(true);
                 Utils.search(s2, output).should.be.equal(true);
@@ -686,17 +692,19 @@ describe("(Checks) Entrega5_BBDD", function () {
         User = require(path_models).models.User;
         Quiz = require(path_models).models.Quiz;
 
-        added_quizzes.forEach( 
-            async q => { 
-                await q.destroy();
-            }
-        );
+        try {
+            added_quizzes.forEach( 
+                async q => { 
+                    await q.destroy();
+                }
+            );
 
-        added_users.forEach( 
-            async u => { 
-                await u.destroy();
-            }
-        );
+            added_users.forEach( 
+                async u => { 
+                    await u.destroy();
+                }
+            );
+        } catch (err) { console.log('Error removing users and quizzes');}  
 
     });
 });
