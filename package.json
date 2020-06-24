@@ -1,7 +1,6 @@
 {
     "name": "MOOC_node_mod3-bbdd_entrega",
-    "author": "CORE-2020",
-    "description": "CORE_Entrega5_BBDD",
+    "author": "ging-moocs",
     "license": "GNU",
     "version": "0.0.0",
     "engines": { "node": "12.16" },

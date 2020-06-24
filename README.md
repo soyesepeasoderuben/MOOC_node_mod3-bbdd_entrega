@@ -2,7 +2,7 @@
 <img  align="right" width="150" style="float: right;" src="https://miriadax.net/miriadax-theme/images/custom/logo_miriadax_new.svg">
 <br/><br/><br/>
 
-# Bases de datos
+# Módulo 3: Modelos de datos de datos con relaciones entre tablas, relaciones 1:1, 1:N y N:N, migraciones - Entrega P2P: Bases de datos
 
 Versión: 24 de junio de 2020
 
