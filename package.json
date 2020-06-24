@@ -1,15 +1,15 @@
 {
-    "name": "Entrega5_BBDD",
+    "name": "MOOC_node_mod3-bbdd_entrega",
     "author": "CORE-2020",
     "description": "CORE_Entrega5_BBDD",
     "license": "GNU",
     "version": "0.0.0",
     "engines": { "node": "12.16" },
     "info": {
-        "githubURL": "CORE-2020/Entrega5_BBDD",
+        "githubURL": "ging-moocs/MOOC_node_mod3-bbdd_entrega",
         "serverUrl": "https://autocorector.dit.upm.es/",
-        "courseId": "8249",
-        "assignmentId": "77288"
+        "courseId": "2",
+        "assignmentId": "9"
     },
     "scripts": {
         "migrate": "sequelize db:migrate --url sqlite://$(pwd)/db.sqlite",

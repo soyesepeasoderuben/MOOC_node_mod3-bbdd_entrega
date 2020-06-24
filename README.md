@@ -1,12 +1,10 @@
-
 <img  align="left" width="150" style="float: left;" src="https://www.upm.es/sfs/Rectorado/Gabinete%20del%20Rector/Logos/UPM/CEI/LOGOTIPO%20leyenda%20color%20JPG%20p.png">
-<img  align="right" width="60" style="float: right;" src="http://www.dit.upm.es/figures/logos/ditupm-big.gif">
-
+<img  align="right" width="150" style="float: right;" src="https://miriadax.net/miriadax-theme/images/custom/logo_miriadax_new.svg">
 <br/><br/><br/>
 
-# Entrega5_BBDD
+# Bases de datos
 
-Versión: 3 de marzo de 2020
+Versión: 24 de junio de 2020
 
 ## Objetivos
  * Afianzar los conocimientos obtenidos sobre el desarrollo de programas interactivos con Node.js
@@ -22,12 +20,12 @@ Esta práctica consiste en la ampliación del proyecto de gestión de usuarios y
 Es necesario utilizar la **versión 12 de Node.js** para el desarrollo de esta práctica. El proyecto debe clonarse en el ordenador desde el que se está trabajando: 
 
 ```
-$ git clone https://github.com/CORE-2020/Entrega5_BBDD
+$ git clone https://github.com/ging-moocs/MOOC_node_mod3-bbdd_entrega
 ```
 A continuación se debe acceder al directorio de trabajo, instalar las dependencias y configurar la base de datos (migraciones y seeders). Entonces puede arrancarse el programa.
 
 ```
-$ cd Entrega5_BBDD
+$ cd MOOC_node_mod3-bbdd_entrega
 $
 $ npm install
 $
@@ -97,47 +95,24 @@ Patri|1|Tue, 18 Feb 2020 14:20:27 GMT
 
 **¡¡Nota importante!!**: Si durante el desarrollo de la práctica crees que has podido "romper" la base de datos o crear alguna inconsistencia siempre puedes reiniciar su estado incial eliminando el fichero ``db.sqlite`` y ejecutando de nuevo los comandos ``npm run migrate`` y ``npm run seed``
 
-## Prueba de la práctica 
+### Prueba de la práctica 
 
 Para ayudar al desarrollo, se provee una herramienta de autocorrección que prueba las distintas funcionalidades que se piden en el enunciado. Para utilizar esta herramienta debes tener node.js (y npm) ([https://nodejs.org/es/](https://nodejs.org/es/)) y Git instalados. 
 
-Para instalar y hacer uso de la [herramienta de autocorrección](https://www.npmjs.com/package/autocorector) en el ordenador local, ejecuta los siguientes comandos en el directorio del proyecto:
+Para instalar y hacer uso de la [herramienta de autocorrección](https://www.npmjs.com/package/moocauto) en el ordenador local, ejecuta los siguientes comandos en el directorio del proyecto:
 
 ```
-$ npm install -g autocorector     ## Instala el programa de test
-$ autocorector                    ## Pasa los tests al fichero a entregar
-............................      ## en el directorio de trabajo
+$ npm install -g moocauto     ## Instala el programa de test
+$ moocauto                    ## Pasa los tests al fichero a entregar
+............................  ## en el directorio de trabajo
 ... (resultado de los tests)
 ```
 También se puede instalar como paquete local, en el caso de que no se dispongas de permisos en el ordenador desde el que estás trabajando:
 ```
-$ npm install autocorector     ## Instala el programa de test
-$ npx autocorector             ## Pasa los tests al fichero a entregar
+$ npm install moocauto         ## Instala el programa de test
+$ npx moocauto                 ## Pasa los tests al fichero a entregar
 ............................   ## en el directorio de trabajo
 ... (resultado de los tests)
 ```
 
-Se puede pasar la herramienta de autocorrección tantas veces como se desee sin ninguna repercusión en la calificación.
-
-**¡¡Nota importante!!**: Tenga en cuenta que en esta práctica el autocorrector comprueba, entre otras cosas, la entrada y salida de la consola en su programa para validar los resultados. Tenga cuidado por lo tanto con los logs que utilice a modo de depuración durante el desarrollo ya que podrían interferir en dicha salida y entrada alterando el resultado de las pruebas. Ante la duda comente los logs a la hora de pasar los tests. 
-
-## Instrucciones para la Entrega y Evaluación.
-
-Una vez satisfecho con su calificación, el alumno puede subir su entrega a Moodle con el siguiente comando:
-```
-$ autocorector --upload
-```
-o, si se ha instalado como paquete local:
-```
-$ npx autocorector --upload
-```
-
-La herramienta de autocorrección preguntará por el correo del alumno y el token de Moodle. En el enlace [https://www.npmjs.com/package/autocorector](https://www.npmjs.com/package/autocorector) se proveen instrucciones para encontrar dicho token.
-
-**RÚBRICA**: Se puntuará el ejercicio a corregir sumando el % indicado a la nota total si la parte indicada es correcta:
-
--  **40%:** Funcionalidad play
--  **60%:** Funcionalidad scores
-
-
-Si pasa todos los tests se dará la máxima puntuación.
+Se puede pasar la herramienta de autocorrección tantas veces como se desee.
